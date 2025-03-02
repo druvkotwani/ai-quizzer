@@ -1,5 +1,6 @@
 import Features from "@/components/Features";
 import NeoHero from "@/components/Hero";
+import Testimonials from "@/components/Testimonials";
 import { Waves } from "@/components/waves-background";
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
       {/* Demo content to show scrolling effect */}
       <NeoHero />
       <Features />
+      <Testimonials />
     </main>
   );
 }
