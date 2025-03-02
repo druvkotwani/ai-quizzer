@@ -1,10 +1,11 @@
+import Features from "@/components/Features";
 import NeoHero from "@/components/Hero";
 import { Waves } from "@/components/waves-background";
 
 export default function Home() {
   return (
     <main className="relative">
-      <div className="absolute inset-0 w-full min-h-screen bg-background/80 rounded-lg overflow-hidden">
+      <div className="absolute inset-0 w-full min-h-screen bg-background/80 rounded-lg overflow-hidden ">
         <div className="absolute inset-0">
           <Waves
             lineColor={"rgba(255, 255, 255, 0.3"}
@@ -23,6 +24,7 @@ export default function Home() {
       </div>
       {/* Demo content to show scrolling effect */}
       <NeoHero />
+      <Features />
     </main>
   );
 }

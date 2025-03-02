@@ -47,10 +47,6 @@ const NeoHero = () => {
     <section
       ref={heroRef}
       className="pt-32 pb-24 md:pt-40 md:pb-32 relative overflow-hidden"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0) 50%)",
-      }}
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
