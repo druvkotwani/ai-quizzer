@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-source-code-pro {
+  font-family: var(--font-source-code-pro);
+}
+
+.font-poppins {
+  font-family: var(--font-poppins);
+}
+
+body {
+  font-family: var(--font-poppins);
+}
+
+/* Add this to make dark mode the default */
+:root {
+  color-scheme: dark;
+}
+
+@layer base {
+  :root {
+    --background: 228 18% 18%; /* Your darkBg color */
+    --foreground: 65 11% 92%; /* Your darkText color */
+  }
+}
+
+/* This ensures dark mode is applied by default */
+html {
+  @apply bg-darkBg text-darkText;
+}

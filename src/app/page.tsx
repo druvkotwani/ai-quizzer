@@ -1,9 +1,26 @@
-import { Button } from "@/components/ui/button";
+import { Waves } from "@/components/waves-background";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <Button variant="default">Button</Button>{" "}
-    </div>
+    <main>
+      <div className="relative w-full min-h-screen bg-background/80 rounded-lg overflow-hidden">
+        <div className="absolute inset-0">
+          <Waves
+            lineColor={"rgba(255, 255, 255, 0.3"}
+            backgroundColor="transparent"
+            waveSpeedX={0.02}
+            waveSpeedY={0.01}
+            waveAmpX={40}
+            waveAmpY={20}
+            friction={0.9}
+            tension={0.01}
+            maxCursorMove={120}
+            xGap={12}
+            yGap={36}
+          />
+        </div>
+      </div>
+      {/* Demo content to show scrolling effect */}
+    </main>
   );
 }
