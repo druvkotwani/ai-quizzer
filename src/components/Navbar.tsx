@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { MenuIcon } from "lucide-react";
+import { MenuIcon, LogIn } from "lucide-react";
 import {
   Sheet,
   SheetClose,
@@ -142,6 +142,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             <Button variant="default">
               <Link href="/sign-in">Sign in</Link>
+              <LogIn className="ml-[2px]" />
             </Button>
           </div>
         </div>
