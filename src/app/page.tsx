@@ -1,3 +1,4 @@
+import CTASection from "@/components/CTASection";
 import Features from "@/components/Features";
 import NeoHero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
@@ -27,6 +28,7 @@ export default function Home() {
       <NeoHero />
       <Features />
       <Testimonials />
+      <CTASection />
     </main>
   );
 }

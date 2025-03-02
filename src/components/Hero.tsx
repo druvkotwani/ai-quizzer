@@ -20,7 +20,7 @@ const NeoHero = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-fadeIn");
+          entry.target.classList.add("animate-slideInFromLeft");
         }
       },
       { threshold: 0.1 }
@@ -67,13 +67,13 @@ const NeoHero = () => {
           </span> */}
           <ProductHuntBanner />
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-balance mb-6 animate-slideUp"
+            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-balance mb-6 animate-slideInFromLeft"
             style={{ animationDelay: "0.1s" }}
           >
             Master Programming Languages Through Intelligent Quizzes
           </h1>
           <p
-            className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-slideUp font-secondary"
+            className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-slideInFromLeft font-secondary"
             style={{ animationDelay: "0.2s" }}
           >
             Challenge yourself with AI-powered quizzes tailored to your

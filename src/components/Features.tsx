@@ -23,11 +23,12 @@ import { Button } from "./ui/button";
 
 const features = [
   {
-    icon: <Code className="h-8 w-8 text-primary" />,
-    title: "Language-Specific Questions",
+    icon: <Target className="h-8 w-8 text-primary" />,
+    title: "Skill Gap Analysis",
     description:
-      "Get quizzes tailored to specific programming languages and frameworks of your choice.",
+      "Identify specific areas where you need to focus more attention based on your performance.",
   },
+
   {
     icon: <Brain className="h-8 w-8 text-primary" />,
     title: "AI-Powered Generation",
@@ -65,16 +66,16 @@ const features = [
       "Access an ever-expanding library of questions that evolves with the latest programming trends.",
   },
   {
+    icon: <Code className="h-8 w-8 text-primary" />,
+    title: "Language-Specific Questions",
+    description:
+      "Get quizzes tailored to specific programming languages and frameworks of your choice.",
+  },
+  {
     icon: <Zap className="h-8 w-8 text-primary" />,
     title: "Rapid Feedback",
     description:
       "Get instant feedback on your answers with detailed explanations to improve your understanding.",
-  },
-  {
-    icon: <Target className="h-8 w-8 text-primary" />,
-    title: "Skill Gap Analysis",
-    description:
-      "Identify specific areas where you need to focus more attention based on your performance.",
   },
   {
     icon: <Users className="h-8 w-8 text-primary" />,
