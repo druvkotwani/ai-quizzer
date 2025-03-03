@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Code,
   Brain,
@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { motion } from "framer-motion";
 
 const features = [
   {
@@ -98,11 +99,10 @@ const features = [
 ];
 
 const Features = () => {
-  const featuresRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState(0);
 
   // Add rotation animation
-  useEffect(() => {
+  React.useEffect(() => {
     const rotateInterval = setInterval(() => {
       setRotation((prev) => (prev + 1) % 360);
     }, 50);
@@ -110,71 +110,74 @@ const Features = () => {
     return () => clearInterval(rotateInterval);
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animate-fadeIn");
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (featuresRef.current) {
-      observer.observe(featuresRef.current);
-    }
-
-    return () => {
-      if (featuresRef.current) {
-        observer.unobserve(featuresRef.current);
-      }
-    };
-  }, []);
-
   // Colors for the feature cards
   const cardColors = [
-    "bg-emerald-300",
-    "bg-[#FD9745]",
-    "bg-[#FFDC58]",
-    "bg-[#ff6b6b]",
-    "bg-[#A3E636]",
-    "bg-[#a388ee]",
+    "bg-emerald-300 hover:bg-emerald-400",
+    "bg-[#FD9745] hover:bg-[#FEA55F]",
+    "bg-[#FFDC58] hover:bg-[#FFE47A]",
+    "bg-[#ff6b6b] hover:bg-[#ff7c7c]",
+    "bg-[#A3E636] hover:bg-[#B4F74E]",
+    "bg-[#a388ee] hover:bg-[#b59df5]",
   ];
 
   return (
-    <section className="py-24 z-10 " ref={featuresRef}>
+    <motion.section 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+      className="py-24 z-10"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="group relative inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm font-medium text-white overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mx-auto text-center mb-16"
+        >
+          <div className="group relative inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm font-medium text-white overflow-hidden transition-all duration-200">
             <span className="relative z-10 flex items-center gap-2">
               <BicepsFlexed className="h-4 w-4 text-primary animate-pulse" />
               <span>Powerful Features</span>
               <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
-            <span className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+            <span className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100"></span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight mb-6 mt-6">
+          <motion.h2 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-3xl md:text-4xl font-display font-bold tracking-tight mb-6 mt-6"
+          >
             Everything You Need to Excel
-          </h2>
-          <p className="text-lg text-muted-foreground font-secondary">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-lg text-muted-foreground font-secondary"
+          >
             Our platform combines intelligent quiz generation with detailed
             analytics to provide a complete learning experience
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2">
           {features.slice(0, 6).map((feature, index) => (
-            <div
+            <motion.div
               key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
               className={`group w-full border-2 border-black ${
                 cardColors[index]
-              } ${index % 2 !== 0 ? "sm:-translate-y-6" : ""}`}
+              } ${index % 2 !== 0 ? "sm:-translate-y-6" : ""} transition-colors duration-200`}
             >
               <div
                 className={`-m-0.5 border-2 border-black ${cardColors[index]} ${
                   index % 2 !== 0 ? "sm:-translate-y-6" : ""
-                } transition-transform duration-300 ease-in-out`}
+                } transition-all duration-200 ease-in-out`}
                 style={{
                   transform: "translateX(0) translateY(0) translateZ(0)",
                 }}
@@ -184,7 +187,7 @@ const Features = () => {
                     cardColors[index]
                   } p-8 ${
                     index % 2 !== 0 ? "sm:-translate-y-6" : ""
-                  } transition-transform duration-300 ease-in-out`}
+                  } transition-all duration-200 ease-in-out`}
                   style={{
                     transform: "translateX(0) translateY(0) translateZ(0)",
                   }}
@@ -197,7 +200,7 @@ const Features = () => {
                       viewBox="0 0 24 24"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="-ml-8 mr-2 opacity-0 transition-all duration-300 ease-in-out group-hover:ml-0 group-hover:opacity-100"
+                      className="-ml-8 mr-2 opacity-0 transition-all duration-200 ease-in-out group-hover:ml-0 group-hover:opacity-100"
                       height="1em"
                       width="1em"
                       xmlns="http://www.w3.org/2000/svg"
@@ -233,7 +236,7 @@ const Features = () => {
                       <textPath
                         href={`#circlePath-${index}`}
                         fill="black"
-                        className="fill-black text-2xl font-black uppercase opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+                        className="fill-black text-2xl font-black uppercase opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                       >
                         LEARN MORE • LEARN MORE • LEARN MORE • LEARN MORE •
                       </textPath>
@@ -251,20 +254,30 @@ const Features = () => {
                   transform: translateX(-8px) translateY(-8px) translateZ(0px) !important;
                 }
               `}</style>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="mt-12 text-center"
+        >
           <Link href="/features" className="inline-block relative z-10">
-            <Button variant="default" className="pointer-events-auto">
-              View All Features
-              <HandCoins className="ml-[2px]" />
-            </Button>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Button 
+                variant="default" 
+                className="pointer-events-auto transition-all duration-200 hover:bg-[#ff9f50]"
+              >
+                View All Features
+                <HandCoins className="ml-[2px]" />
+              </Button>
+            </motion.div>
           </Link>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

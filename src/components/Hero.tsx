@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   ArrowRight,
   Code,
@@ -11,31 +11,10 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 import ProductHuntBanner from "./ProducthuntBanner";
+import { motion } from "framer-motion";
 
 const NeoHero = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [hoverCard, setHoverCard] = useState<number | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animate-slideInFromLeft");
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (heroRef.current) {
-      observer.observe(heroRef.current);
-    }
-
-    return () => {
-      if (heroRef.current) {
-        observer.unobserve(heroRef.current);
-      }
-    };
-  }, []);
+  const [hoverCard, setHoverCard] = React.useState<number | null>(null);
 
   const techCards = [
     { icon: <Code className="w-6 h-6" />, label: "Learn Coding" },
@@ -44,8 +23,11 @@ const NeoHero = () => {
   ];
 
   return (
-    <section
-      ref={heroRef}
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
       className="pt-32 pb-24 md:pt-40 md:pb-32 relative overflow-hidden"
     >
       {/* Background elements */}
@@ -61,36 +43,44 @@ const NeoHero = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* <span className="inline-block text-sm font-medium bg-[#ff8e3c]/20 text-[#ff8e3c] px-3 py-1 rounded-full mb-6 animate-scaleIn border-2 border-black">
-            Elevate Your Coding Skills
-          </span> */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto text-center"
+        >
           <ProductHuntBanner />
-          <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-balance mb-6 animate-slideInFromLeft"
-            style={{ animationDelay: "0.1s" }}
+          <motion.h1
+            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-balance mb-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             Master Programming Languages Through Intelligent Quizzes
-          </h1>
-          <p
-            className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-slideInFromLeft font-secondary"
-            style={{ animationDelay: "0.2s" }}
+          </motion.h1>
+          <motion.p
+            className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto font-secondary"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             Challenge yourself with AI-powered quizzes tailored to your
             programming language, framework, and skill level to accelerate your
             learning journey.
-          </p>
+          </motion.p>
 
           {/* Interactive tech cards */}
-          <div
-            className="flex flex-wrap justify-center gap-4 mb-10 animate-slideUp"
-            style={{ animationDelay: "0.25s" }}
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
             {techCards.map((card, index) => (
               <Button
                 key={index}
                 variant="default"
-                className={`flex items-center gap-2 transition-all duration-300 ${
+                className={`flex items-center gap-2 transition-all duration-200 scale-100 hover:scale-105 active:scale-95 ${
                   hoverCard === index
                     ? "bg-black text-white"
                     : "bg-white text-black"
@@ -99,7 +89,7 @@ const NeoHero = () => {
                 onMouseLeave={() => setHoverCard(null)}
               >
                 <div
-                  className={`transition-all duration-300 ${
+                  className={`${
                     hoverCard === index ? "text-white" : "text-black"
                   }`}
                 >
@@ -114,28 +104,36 @@ const NeoHero = () => {
                 </span>
               </Button>
             ))}
-          </div>
+          </motion.div>
 
-          <div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slideUp"
-            style={{ animationDelay: "0.3s" }}
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
           >
             <Link href="/signin">
-              <Button size="lg" className="w-full sm:w-auto group bg-[#ff8e3c]">
+              <Button 
+                size="lg" 
+                className="w-full sm:w-auto group scale-100 transition-all duration-200 hover:scale-105 active:scale-95 !bg-[#ff8e3c] hover:bg-[#ff9f50]"
+              >
                 Sign In to Start
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="lg" className="w-full sm:w-auto group bg-[#ff6b6b]">
+              <Button 
+                size="lg" 
+                className="w-full sm:w-auto group scale-100 transition-all duration-200 hover:scale-105 active:scale-95 !bg-[#ff6b6b] hover:bg-[#ff7c7c]"
+              >
                 Sign Up Free
-                <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ArrowUpRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
