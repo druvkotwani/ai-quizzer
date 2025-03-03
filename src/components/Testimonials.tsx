@@ -84,11 +84,13 @@ const testimonials: Testimonial[] = [
 const TestimonialCard = ({
   testimonial,
   isActive,
-  position,
+
   visibleCount,
   isMobile,
   slideDirection,
   transitionActive,
+  onClick,
+  visualIndex,
 }: {
   testimonial: Testimonial;
   isActive: boolean;
@@ -97,19 +99,28 @@ const TestimonialCard = ({
   isMobile: boolean;
   slideDirection: "left" | "right" | null;
   transitionActive: boolean;
+  onClick: () => void;
+  visualIndex: number;
 }) => {
-  // Calculate horizontal position (centered distribution)
+  // Calculate horizontal position based on the visual index rather than position
+  // This ensures cards maintain their visual positions during transitions
   const centerPosition = Math.floor(visibleCount / 2);
-  const distanceFromCenter = position - centerPosition;
+  const distanceFromCenter = visualIndex - centerPosition;
 
   // Spread cards with larger offset for smaller screens
   const spreadFactor = isMobile ? 100 : 20; // Increased spacing for mobile
   const horizontalPosition = 50 + distanceFromCenter * spreadFactor;
 
   // Add random slight variations for a stacked look - only for non-active cards and non-mobile
-  const randomOffsetX = isActive || isMobile ? 0 : Math.random() * 5 - 2.5;
-  const randomOffsetY = isActive || isMobile ? 0 : Math.random() * 15 - 7.5;
-  const randomRotation = isActive || isMobile ? 0 : Math.random() * 3 - 1.5;
+  // Use visualIndex for consistent randomization
+  const seed = visualIndex * 100 + testimonial.id;
+  const pseudoRandom = (seed: number) => {
+    return ((Math.sin(seed) + 1) / 2);
+  };
+  
+  const randomOffsetX = isActive || isMobile ? 0 : (pseudoRandom(seed) * 5 - 2.5);
+  const randomOffsetY = isActive || isMobile ? 0 : (pseudoRandom(seed + 1) * 15 - 7.5);
+  const randomRotation = isActive || isMobile ? 0 : (pseudoRandom(seed + 2) * 3 - 1.5);
 
   // Determine background color and text color based on active state and screen size
   const bgColorClass = isActive && !isMobile ? "bg-white" : testimonial.color;
@@ -168,9 +179,10 @@ const TestimonialCard = ({
         transform: isMobile ? undefined : transformStyle,
         ...additionalStyles,
       }}
+      onClick={onClick}
     >
       <div
-        className={`absolute cursor-pointer border-black p-8 transition-colors duration-500 z-10 ${bgColorClass} ${textColorClass}`}
+        className={`absolute cursor-pointer border-black p-8 transition-colors duration-500 z-10 ${bgColorClass} ${textColorClass} hover:shadow-lg`}
         style={{
           borderWidth: "2px",
           clipPath:
@@ -232,6 +244,10 @@ const Testimonials = () => {
   );
   const [transitionActive, setTransitionActive] = useState(false);
   const transitionTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const testimonialsRef = useRef<Testimonial[]>(testimonials);
+  
+  // Keep track of the visual positions of testimonials
+  const [visualPositions, setVisualPositions] = useState<Record<number, number>>({});
 
   // Update visible count based on screen width
   useEffect(() => {
@@ -266,6 +282,37 @@ const Testimonials = () => {
       }
     };
   }, []);
+
+  // Handle clicking on a testimonial card to make it active
+  const handleCardClick = (index: number) => {
+    if (transitionActive || index === activeIndex) return;
+    
+    // Determine if we're moving left or right
+    const currentIndex = activeIndex;
+    const totalItems = testimonials.length;
+    
+    // Calculate the shortest path (considering wrap-around)
+    const moveRight = (index - currentIndex + totalItems) % totalItems;
+    const moveLeft = (currentIndex - index + totalItems) % totalItems;
+    
+    // Choose the direction with the shortest distance
+    const direction = moveRight <= moveLeft ? "left" : "right";
+    
+    // Start transition
+    setTransitionActive(true);
+    setSlideDirection(direction);
+    
+    // Update active index after a small delay
+    setTimeout(() => {
+      setActiveIndex(index);
+    }, 50);
+    
+    // Reset slide direction after animation completes
+    transitionTimerRef.current = setTimeout(() => {
+      setSlideDirection(null);
+      setTransitionActive(false);
+    }, 500);
+  };
 
   const handlePrev = () => {
     if (transitionActive) return; // Prevent multiple clicks during transition
@@ -309,21 +356,40 @@ const Testimonials = () => {
     }, 500);
   };
 
-  // Get visible testimonials
+  // Get visible testimonials with consistent ordering and visual positions
   const getVisibleTestimonials = () => {
     const result = [];
-
+    const totalItems = testimonialsRef.current.length;
+    
     // Calculate how many cards to show on each side of active card
     const cardsOnEachSide = Math.floor(visibleCount / 2);
-
-    // Add cards to display (centered around active index)
-    for (let i = -cardsOnEachSide; i <= cardsOnEachSide; i++) {
-      // Handle wrapping around the array
-      const index =
-        (activeIndex + i + testimonials.length) % testimonials.length;
-      result.push(index);
+    
+    // Create a new visual positions map if we don't have one yet
+    const newVisualPositions: Record<number, number> = {...visualPositions};
+    
+    // If we don't have a visual position for the active index, initialize all positions
+    if (visualPositions[activeIndex] === undefined) {
+      for (let i = 0; i < totalItems; i++) {
+        newVisualPositions[i] = i;
+      }
+      setVisualPositions(newVisualPositions);
     }
-
+    
+    // Create a stable ordering based on the active index
+    for (let i = -cardsOnEachSide; i <= cardsOnEachSide; i++) {
+      const index = (activeIndex + i + totalItems) % totalItems;
+      
+      // Calculate visual index - this is what determines the card's position on screen
+      // and should remain consistent even when activeIndex changes
+      const visualIndex = i + cardsOnEachSide;
+      
+      result.push({
+        index,
+        position: i + cardsOnEachSide, // Position in the visible array
+        visualIndex, // Visual position (for rendering)
+      });
+    }
+    
     return result;
   };
 
@@ -352,9 +418,9 @@ const Testimonials = () => {
 
         <div className="relative h-[550px] w-full">
           <div className="absolute inset-0 w-full h-full ">
-            {visibleTestimonials.map((index, position) => (
+            {visibleTestimonials.map(({ index, position, visualIndex }) => (
               <TestimonialCard
-                key={testimonials[index].id}
+                key={`testimonial-${index}`}
                 testimonial={testimonials[index]}
                 isActive={index === activeIndex}
                 position={position}
@@ -362,6 +428,8 @@ const Testimonials = () => {
                 isMobile={isMobile}
                 slideDirection={slideDirection}
                 transitionActive={transitionActive}
+                onClick={() => handleCardClick(index)}
+                visualIndex={visualIndex}
               />
             ))}
           </div>
