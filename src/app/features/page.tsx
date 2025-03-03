@@ -132,7 +132,7 @@ const Page = () => {
       </div>
       
       <div className="w-full relative">
-        <div className="absolute inset-0 w-full min-h-screen bg-background/80 rounded-lg overflow-hidden ">
+        <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
           <div className="absolute inset-0">
             <Waves
               lineColor={"rgba(255, 255, 255, 0.3"}
