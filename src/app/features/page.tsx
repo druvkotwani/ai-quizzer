@@ -1,7 +1,6 @@
-import CTASection from '@/components/CTASection';
-import SingleFeatureMarquee from '@/components/SingleFeatureMarquee';
-import StickyCards from '@/components/StickyCards';
-import { Waves } from '@/components/waves-background';
+import SimpleCTASection from "@/components/SimpleCTASection";
+import StickyCards from "@/components/StickyCards";
+import { Waves } from "@/components/waves-background";
 import {
   BarChart3,
   Cloud,
@@ -12,52 +11,71 @@ import {
   Repeat,
   Timer,
   Users,
-  Zap
-} from 'lucide-react';
+  Zap,
+} from "lucide-react";
+import React from "react";
 
-// Top 7 features to display in the marquee with improved icons
+// Top 6 features to display in the grid with improved icons
 const topFeatures = [
   {
-    icon: <Crosshair className="h-8 w-8 text-primary" />,
+    icon: <Crosshair className="h-8 w-8" />,
     title: "Skill Gap Analysis",
     description:
       "Identify specific areas where you need to focus more attention based on your performance.",
+    color: "bg-emerald-300",
+    shadowColor: "#46651a",
+    iconBgColor: "bg-emerald-100",
+    iconColor: "text-emerald-600",
   },
   {
-    icon: <Cpu className="h-8 w-8 text-primary" />,
+    icon: <Cpu className="h-8 w-8" />,
     title: "AI-Powered Generation",
     description:
       "Each quiz is uniquely created by advanced AI based on your preferences and skill level.",
+    color: "bg-[#FD9745]",
+    shadowColor: "#6d2f2f",
+    iconBgColor: "bg-orange-100",
+    iconColor: "text-orange-600",
   },
   {
-    icon: <BarChart3 className="h-8 w-8 text-primary" />,
+    icon: <BarChart3 className="h-8 w-8" />,
     title: "Performance Analytics",
     description:
       "Track your progress over time with detailed analytics on your strengths and areas for improvement.",
+    color: "bg-[#FFDC58]",
+    shadowColor: "#7a6425",
+    iconBgColor: "bg-yellow-100",
+    iconColor: "text-yellow-600",
   },
   {
-    icon: <Timer className="h-8 w-8 text-primary" />,
+    icon: <Timer className="h-8 w-8" />,
     title: "Time-Based Challenges",
     description:
       "Practice under timed conditions to improve your speed and accuracy for technical interviews.",
+    color: "bg-[#ff6b6b]",
+    shadowColor: "#a33636",
+    iconBgColor: "bg-red-100",
+    iconColor: "text-red-600",
   },
   {
-    icon: <GitMerge className="h-8 w-8 text-primary" />,
+    icon: <GitMerge className="h-8 w-8" />,
     title: "Difficulty Progression",
     description:
       "Start with basics and gradually advance to more complex concepts as you improve.",
+    color: "bg-[#A3E636]",
+    shadowColor: "#2a7c48",
+    iconBgColor: "bg-lime-100",
+    iconColor: "text-lime-600",
   },
   {
-    icon: <Cloud className="h-8 w-8 text-primary" />,
+    icon: <Cloud className="h-8 w-8" />,
     title: "Cloud Synchronization",
     description:
       "Your progress is saved and synced across all your devices for seamless learning experience.",
-  },
-  {
-    icon: <Repeat className="h-8 w-8 text-primary" />,
-    title: "Continuous Learning",
-    description:
-      "Access an ever-expanding library of questions that evolves with the latest programming trends.",
+    color: "bg-[#a388ee]",
+    shadowColor: "#5d4a8a",
+    iconBgColor: "bg-purple-100",
+    iconColor: "text-purple-600",
   },
 ];
 
@@ -130,7 +148,7 @@ const Page = () => {
       <div className="w-full">
         <StickyCards cards={cardsData} />
       </div>
-      
+
       <div className="w-full relative">
         <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
           <div className="absolute inset-0">
@@ -149,24 +167,71 @@ const Page = () => {
             />
           </div>
         </div>
-        <div className="container mx-auto px-4  md:py-24 py-16">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 md:mb-8">Our Top Features</h1>
+        <div className="container mx-auto px-4 py-24 xl:pt-32 ">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 md:mb-8">
+            Our Top Features
+          </h1>
           <p className="text-base md:text-lg text-center text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-12 px-2">
-            Discover what makes our AI-powered quiz platform the best choice for your learning journey
+            Discover what makes our AI-powered quiz platform the best choice for
+            your learning journey
           </p>
-          
-          {/* Feature Marquee */}
-          <div className="w-full overflow-hidden">
-            <SingleFeatureMarquee features={topFeatures} speed={10} />
+
+          {/* Feature Cards Grid with increased spacing */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 px-2 md:px-4 max-w-7xl mx-auto mb-20">
+            {topFeatures.map((feature) => (
+              <div
+                key={feature.title}
+                className="group relative transition-all duration-300 ease-in-out"
+              >
+                {/* Third shadow layer (deepest) - only visible on hover */}
+                <div
+                  className="absolute inset-0 border-2 border-black opacity-0 group-hover:opacity-70 transition-opacity duration-300"
+                  style={{
+                    backgroundColor: feature.shadowColor,
+                  }}
+                />
+
+                {/* Second shadow layer (middle) - only visible on hover */}
+                <div
+                  className="absolute inset-0 border-2 border-black opacity-0 group-hover:opacity-85 transition-opacity duration-300 transform translate-x-0 -translate-y-0 group-hover:translate-x-2 group-hover:-translate-y-2"
+                  style={{
+                    backgroundColor: feature.shadowColor,
+                  }}
+                />
+
+                {/* Main card with increased height */}
+                <div
+                  className={`relative flex flex-col h-full min-h-[320px] p-7 md:p-9 border-2 border-black ${feature.color} transition-all duration-300 ease-in-out transform translate-x-0 -translate-y-0 group-hover:translate-x-4 group-hover:-translate-y-4`}
+                >
+                  {/* Enhanced icon display with larger size */}
+                  <div
+                    className={`mb-6 ${feature.iconBgColor} rounded-full p-4 w-20 h-20 flex items-center justify-center border-2 border-black shadow-md transform transition-transform duration-300 group-hover:scale-110`}
+                  >
+                    <div className={`${feature.iconColor} w-12 h-12`}>
+                      {React.cloneElement(feature.icon as React.ReactElement, {
+                        ...feature.icon.props,
+                        className: `h-12 w-12 ${feature.iconColor}`,
+                        strokeWidth: 2.5,
+                      })}
+                    </div>
+                  </div>
+
+                  <h3 className="text-2xl font-bold mb-4 text-black">
+                    {feature.title}
+                  </h3>
+                  <p className="text-base text-black flex-grow">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-     
-        <CTASection />
-     
+
+        <SimpleCTASection />
       </div>
-      
     </>
-  )
-}
+  );
+};
 
 export default Page;
