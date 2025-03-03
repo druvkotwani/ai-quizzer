@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { PricingCard } from "@/components/pricing/PricingCard";
 import { Button } from "@/components/ui/button";
+import PricingFAQ from "@/components/pricing/PricingFAQ";
 
 const pricingPlans = [
   {
@@ -41,7 +42,7 @@ const pricingPlans = [
     popular: true,
     color: "bg-[#ff8e3c]",
     hoverColor: "#ff9f50", // slightly lighter orange
-  }
+  },
 ];
 
 export default function PricingPageClient() {
@@ -144,6 +145,9 @@ export default function PricingPageClient() {
             </Button>
           </motion.div>
         </motion.div>
+        
+        {/* FAQ Section */}
+        <PricingFAQ />
       </div>
     </motion.div>
   );
