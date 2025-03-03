@@ -12,6 +12,15 @@
 
 body {
   font-family: var(--font-poppins);
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
 }
 
 /* Add this to make dark mode the default */
@@ -23,6 +32,18 @@ body {
   :root {
     --background: 228 18% 18%; /* Your darkBg color */
     --foreground: 65 11% 92%; /* Your darkText color */
+  }
+}
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }
 
