@@ -2,7 +2,6 @@
 "use client"
 
 import { useRef, useState, useEffect } from 'react';
-import { Code, RefreshCw, Server, Users, Zap } from 'lucide-react';
 import {  NeobrutButton } from './ui/button';
 
 interface CardData {
