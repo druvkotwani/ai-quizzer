@@ -43,7 +43,7 @@ const NeoHero = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -112,18 +112,18 @@ const NeoHero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >
-            <Link href="/signin">
-              <Button 
-                size="lg" 
+            <Link href="/sign-in">
+              <Button
+                size="lg"
                 className="w-full sm:w-auto group scale-100 transition-all duration-200 hover:scale-105 active:scale-95 !bg-[#ff8e3c] hover:bg-[#ff9f50]"
               >
                 Sign In to Start
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Link href="/signup">
-              <Button 
-                size="lg" 
+            <Link href="/sign-up">
+              <Button
+                size="lg"
                 className="w-full sm:w-auto group scale-100 transition-all duration-200 hover:scale-105 active:scale-95 !bg-[#ff6b6b] hover:bg-[#ff7c7c]"
               >
                 Sign Up Free

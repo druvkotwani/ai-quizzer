@@ -1,22 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Quizzer
+
+A modern web application for creating and taking quizzes powered by AI.
+
+## Authentication Setup
+
+This application uses Google OAuth for authentication. Follow these steps to set up Google OAuth:
+
+### Setting up Google OAuth
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Navigate to "APIs & Services" > "Credentials"
+4. Click "Create Credentials" and select "OAuth client ID"
+5. Select "Web application" as the application type
+6. Add a name for your OAuth client
+7. Add authorized JavaScript origins:
+   - For development: `http://localhost:3000`
+   - For production: Your production URL
+8. Add authorized redirect URIs:
+   - For development: `http://localhost:3000/api/auth/callback/google`
+   - For production: `https://your-production-domain.com/api/auth/callback/google`
+9. Click "Create"
+10. Copy the generated Client ID and Client Secret
+
+### Environment Variables
+
+1. Create a `.env.local` file in the root directory based on `.env.example`
+2. Add your Google Client ID and Client Secret:
+   ```
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your_generated_secret_key
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   ```
+3. For the `NEXTAUTH_SECRET`, you can generate a random string using:
+   ```
+   openssl rand -base64 32
+   ```
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```
+   npm run dev
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Features
+
+- Google OAuth authentication
+- Modern neobrutalism design
+- Interactive wave background
+- Responsive design for all devices
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

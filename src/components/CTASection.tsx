@@ -7,20 +7,20 @@ import { motion } from "framer-motion";
 
 const CTASection = () => {
   return (
-    <motion.section 
+    <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       className="pb-24"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -28,7 +28,7 @@ const CTASection = () => {
           >
             Ready to Test Your Programming Knowledge?
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -37,7 +37,7 @@ const CTASection = () => {
             Create a personalized quiz now and start improving your skills one
             question at a time.
           </motion.p>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -45,7 +45,10 @@ const CTASection = () => {
           >
             <Link href="/quiz">
               <motion.div whileTap={{ scale: 0.95 }}>
-                <Button size="lg" className="w-full sm:w-auto transition-all duration-200 hover:bg-[#ff9f50]">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto transition-all duration-200 hover:bg-[#ff9f50]"
+                >
                   Create Your Quiz
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -68,9 +71,13 @@ const CTASection = () => {
                 </Button>
               </motion.div>
             </Link>
-            <Link href="/signin">
+            <Link href="/sign-in">
               <motion.div whileTap={{ scale: 0.95 }}>
-                <Button size="lg" variant="default" className="w-full sm:w-auto transition-all duration-200 hover:bg-[#ff7c7c]">
+                <Button
+                  size="lg"
+                  variant="default"
+                  className="w-full sm:w-auto transition-all duration-200 hover:bg-[#ff7c7c]"
+                >
                   Sign In with Google
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

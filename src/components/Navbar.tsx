@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { MenuIcon, LogIn } from "lucide-react";
+import { MenuIcon, LogIn, LogOut } from "lucide-react";
 import {
   Sheet,
   SheetClose,
@@ -13,9 +13,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { status } = useSession();
+  const isAuthenticated = status === "authenticated";
 
   // Handle scroll event to update navbar styling
   useEffect(() => {
@@ -35,6 +38,10 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/" });
+  };
 
   return (
     <>
@@ -62,6 +69,11 @@ const Navbar = () => {
                   <Link href="/pricing" className="text-lg">
                     Pricing
                   </Link>
+                  {isAuthenticated && (
+                    <Link href="/dashboard" className="text-lg">
+                      Dashboard
+                    </Link>
+                  )}
                 </SheetDescription>
               </SheetHeader>
 
@@ -83,9 +95,15 @@ const Navbar = () => {
 
           {/* Mobile Sign in Button - This creates balance with the menu icon */}
           <div className="ml-auto">
-            <Button variant="default">
-              <Link href="/sign-in">Sign in</Link>
-            </Button>
+            {isAuthenticated ? (
+              <Button variant="default" onClick={handleSignOut}>
+                Sign out
+              </Button>
+            ) : (
+              <Button variant="default">
+                <Link href="/sign-in">Sign in</Link>
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -119,15 +137,17 @@ const Navbar = () => {
               </span>
               <span className="absolute inset-0 z-0 bg-gradient-to-br from-white/20 to-white/5 opacity-0 transition-opacity group-hover:opacity-100"></span>
             </Link>
-            {/* <Link
-              href="/contact"
-              className="group relative scale-100 overflow-hidden rounded-lg px-4 py-2 transition-transform hover:scale-105 active:scale-95"
-            >
-              <span className="relative z-10 text-white/90 transition-colors group-hover:text-white">
-                Contact
-              </span>
-              <span className="absolute inset-0 z-0 bg-gradient-to-br from-white/20 to-white/5 opacity-0 transition-opacity group-hover:opacity-100"></span>
-            </Link> */}
+            {isAuthenticated && (
+              <Link
+                href="/dashboard"
+                className="group relative scale-100 overflow-hidden rounded-lg px-4 py-2 transition-transform hover:scale-105 active:scale-95"
+              >
+                <span className="relative z-10 text-white/90 transition-colors group-hover:text-white">
+                  Dashboard
+                </span>
+                <span className="absolute inset-0 z-0 bg-gradient-to-br from-white/20 to-white/5 opacity-0 transition-opacity group-hover:opacity-100"></span>
+              </Link>
+            )}
           </nav>
 
           {/* Center Logo - Using absolute positioning for true center */}
@@ -140,10 +160,23 @@ const Navbar = () => {
 
           {/* Desktop Auth */}
           <div className="flex items-center space-x-4">
-            <Button variant="default">
-              <Link href="/sign-in">Sign in</Link>
-              <LogIn className="ml-[2px]" />
-            </Button>
+            {isAuthenticated ? (
+              <Button
+                variant="default"
+                onClick={handleSignOut}
+                className="flex items-center space-x-1"
+              >
+                <span>Sign out</span>
+                <LogOut className="ml-[2px]" />
+              </Button>
+            ) : (
+              <Link href="/sign-in" className="flex items-center">
+                <Button variant="default">
+                  <span>Sign in</span>
+                  <LogIn className="ml-[2px]" />
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </header>
