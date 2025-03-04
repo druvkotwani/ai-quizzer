@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function SignInForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +22,7 @@ export default function SignInForm() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <motion.div whileTap={{ scale: 0.95 }}>
         <Button
           onClick={handleGoogleSignIn}
           disabled={isLoading}
@@ -55,9 +56,14 @@ export default function SignInForm() {
           </span>
           {isLoading ? "Signing in..." : "Sign in with Google"}
         </Button>
-      </div>
+      </motion.div>
 
-      <div className="text-center mt-6">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        className="text-center mt-6"
+      >
         <p className="text-sm text-gray-600">
           Don&apos;t have an account?{" "}
           <Link
@@ -67,7 +73,7 @@ export default function SignInForm() {
             Sign up
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }

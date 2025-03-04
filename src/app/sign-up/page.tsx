@@ -2,6 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { Waves } from "@/components/waves-background";
 import SignUpForm from "./SignUpForm";
+import SignUpClient from "./SignUpClient";
 
 export const metadata: Metadata = {
   title: "Sign Up - AI Quizzer",
@@ -29,20 +30,7 @@ export default function SignUpPage() {
         </div>
       </div>
 
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-xl p-8 shadow-lg">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold tracking-tight text-black">
-              Create your account
-            </h1>
-            <p className="mt-2 text-sm text-gray-600">
-              Join AI Quizzer to create and manage quizzes
-            </p>
-          </div>
-
-          <SignUpForm />
-        </div>
-      </div>
+      <SignUpClient />
     </main>
   );
 }
