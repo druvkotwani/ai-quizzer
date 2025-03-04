@@ -1,7 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
 import { Waves } from "@/components/waves-background";
-import SignUpForm from "./SignUpForm";
 import SignUpClient from "./SignUpClient";
 
 export const metadata: Metadata = {
